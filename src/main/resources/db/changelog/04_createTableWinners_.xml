@@ -1,0 +1,81 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet author="rafinhapsantos50@gmail.com" id="winners-4">
+
+    <createTable tableName="winners">
+
+      <column type="uuid" name="id" defaultValueComputed="uuid_generate_v4()">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="winnersPK" />
+      </column>
+
+      <column type="uuid" name="id_user">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="uuid" name="id_order">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="timestamp" name="draw_date">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="boolean" name="payment">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="int" name="number">
+        <constraints nullable="false" />
+      </column>
+
+
+      <column type="boolean" name="winner" >
+        <constraints nullable="false" />
+      </column>
+
+
+      <column type="uuid" name="id_campaign">
+        <constraints nullable="false" />
+      </column>
+
+
+    </createTable>
+
+    <addForeignKeyConstraint baseColumnNames="id_campaign"
+                             baseTableName="winners"
+                             constraintName="campaign_winners2_fk"
+                             deferrable="false"
+                             initiallyDeferred="false"
+                             validate="true"
+                             referencedTableName="campaigns"
+                             referencedColumnNames="id"
+    />
+
+
+
+    <addForeignKeyConstraint baseColumnNames="id_order"
+                             baseTableName="winners"
+                             constraintName="winners_tickets_fk"
+                             deferrable="false"
+                             initiallyDeferred="false"
+                             validate="true"
+                             referencedTableName="orders"
+                             referencedColumnNames="id"
+    />
+
+
+    <addForeignKeyConstraint baseColumnNames="id_user"
+                             baseTableName="winners"
+                             constraintName="users_winners_fk"
+                             deferrable="false"
+                             initiallyDeferred="false"
+                             validate="true"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+    />
+
+
+
+
+  </changeSet>
+</databaseChangeLog>

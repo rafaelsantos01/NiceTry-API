@@ -1,0 +1,50 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet author="rafinhapsantos50@gmail.com" id="users-2">
+    <createTable tableName="users">
+
+      <column type="uuid" name="id" defaultValueComputed="uuid_generate_v4()">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="usersPK" />
+      </column>
+
+      <column type="varchar(255)" name="name">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="varchar" name="cpf">
+        <constraints nullable="true"  />
+      </column>
+
+      <column type="varchar(255)" name="email">
+        <constraints nullable="false"/>
+      </column>
+
+
+      <column type="varchar(20)" name="phone_number">
+        <constraints nullable="true"  />
+      </column>
+
+      <column type="varchar(255)" name="password">
+        <constraints nullable="false"  />
+      </column>
+
+      <column type="varchar(255)" name="trade_link">
+        <constraints nullable="false"  />
+      </column>
+
+      <column type="varchar(80)" name="permission">
+        <constraints nullable="false"  />
+      </column>
+
+      <column type="boolean" name="status">
+        <constraints nullable="false"  />
+      </column>
+
+      <column type="timestamp" name="create_date">
+        <constraints nullable="false"  />
+      </column>
+
+
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

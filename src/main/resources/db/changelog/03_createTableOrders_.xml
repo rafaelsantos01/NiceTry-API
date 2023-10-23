@@ -1,0 +1,114 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  <changeSet author="rafinhapsantos50@gmail.com" id="orders-3">
+
+    <createTable tableName="orders">
+
+      <column type="uuid" name="id" defaultValueComputed="uuid_generate_v4()">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="ticketPK" />
+      </column>
+
+      <column type="uuid" name="id_user">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="uuid" name="id_campaign">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="int" name="numbers">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="datetime" name="checkout_date">
+        <constraints nullable="true" />
+      </column>
+
+      <column type="boolean" name="payment">
+        <constraints nullable="false" />
+      </column>
+
+
+      <column type="bigint" name="id_transaction">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="text" name="qrcode">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="text" name="ticket_url">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="varchar(60)" name="status_payment">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="decimal" name="transaction_amount">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="timestamp" name="updated_at" defaultValueComputed="now()">
+        <constraints nullable="true" />
+      </column>
+
+      <column type="timestamp" name="created_at" defaultValueComputed="now()">
+        <constraints nullable="true" />
+      </column>
+
+      <column type="UUID" name="user_created">
+        <constraints nullable="true" />
+      </column>
+
+      <column type="UUID" name="user_updated">
+        <constraints nullable="true" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseColumnNames="id_campaign"
+                             baseTableName="orders"
+                             constraintName="campaign_tickets_fk"
+                             deferrable="false"
+                             initiallyDeferred="false"
+                             validate="true"
+                             referencedTableName="campaigns"
+                             referencedColumnNames="id"
+    />
+
+
+    <addForeignKeyConstraint baseColumnNames="id_user"
+                             baseTableName="orders"
+                             constraintName="users_tickets_fk"
+                             deferrable="false"
+                             initiallyDeferred="false"
+                             validate="true"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+    />
+
+
+    <addForeignKeyConstraint baseColumnNames="user_created"
+                             baseTableName="orders"
+                             constraintName="serCreated_tickets_fk"
+                             deferrable="false"
+                             initiallyDeferred="false"
+                             validate="true"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+    />
+
+    <addForeignKeyConstraint baseColumnNames="user_updated"
+                             baseTableName="orders"
+                             constraintName="userUpdated_tickets_fk"
+                             deferrable="false"
+                             initiallyDeferred="false"
+                             validate="true"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+    />
+
+
+
+
+  </changeSet>
+</databaseChangeLog>
