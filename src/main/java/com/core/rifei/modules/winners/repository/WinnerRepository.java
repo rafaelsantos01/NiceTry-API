@@ -11,4 +11,6 @@ import java.util.UUID;
 @Repository
 public interface WinnerRepository extends JpaRepository<Winner, UUID> {
   List<Winner> findByCampaigns(Campaigns campaigns);
+
+
 }

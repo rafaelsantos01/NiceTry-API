@@ -28,8 +28,8 @@
         <constraints nullable="false"  />
       </column>
 
-      <column type="varchar(255)" name="trade_link">
-        <constraints nullable="false"  />
+      <column type="varchar(255)" name="observation">
+        <constraints nullable="true"  />
       </column>
 
       <column type="varchar(80)" name="permission">

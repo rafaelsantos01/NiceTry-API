@@ -3,6 +3,7 @@ package com.core.rifei.modules.users.services.userData;
 import com.core.rifei.modules.users.entityes.Users;
 import com.core.rifei.modules.users.repository.UsersRepository;
 import com.core.rifei.security.context.SetUserService;
+import com.core.rifei.utils.MaskCPF;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class UserDataService {
   @Autowired
   SetUserService setUserService;
 
+  @Autowired
+  MaskCPF maskCPF;
+
 
   public UserDataDTO execute() {
 
@@ -31,11 +35,13 @@ public class UserDataService {
     UserDataDTO response = new UserDataDTO();
     response.setEmail(user.getLogin());
     response.setName(user.getName());
-    response.setCpf(user.getCpf());
     response.setId(user.getId());
-    response.setTradeLink(user.getTradeLink());
+    response.setObservation(user.getObservation());
     response.setPhoneNumber(user.getPhoneNumber());
     response.setEmail_verify(user.isStatus());
+    if(user.getCpf() != null){
+      response.setCpf(maskCPF.execute(user.getCpf()));
+    }
 
     return response;
   }

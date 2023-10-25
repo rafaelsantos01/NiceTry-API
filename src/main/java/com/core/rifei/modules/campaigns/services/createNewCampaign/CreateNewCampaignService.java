@@ -24,6 +24,7 @@ public class CreateNewCampaignService {
 
     Campaigns campaigns = new Campaigns();
 
+
     campaigns.setName(data.getName());
     campaigns.setDescription(data.getDescription());
     campaigns.setLabel(data.getLabel());
@@ -32,6 +33,7 @@ public class CreateNewCampaignService {
     campaigns.setMaxNumbers(data.getMaxNumbers());
     campaigns.setUrlImage(data.getUrlImage());
     campaigns.setStatus(true);
+    campaigns.setType(data.getType());
 
     Campaigns campaign = campaignsRepository.saveAndFlush(campaigns);
 
@@ -43,6 +45,7 @@ public class CreateNewCampaignService {
     campaignDTO.setNumberValue(campaign.getNumberValue());
     campaignDTO.setProductValue(campaign.getProductValue());
     campaignDTO.setStatus(campaign.isStatus());
+    campaignDTO.setType(campaign.getType());
 
     return campaignDTO;
   }

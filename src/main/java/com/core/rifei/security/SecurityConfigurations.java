@@ -86,8 +86,8 @@ public class SecurityConfigurations {
     configuration.addAllowedHeader("*");
     configuration.addAllowedMethod("*");
     configuration.setMaxAge(3600L);
-    configuration.setAllowedOriginPatterns(APP_URLS_CORS);
-    //configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+    //configuration.setAllowedOriginPatterns(APP_URLS_CORS);
+    configuration.setAllowedOriginPatterns(Arrays.asList("*"));
     //configuration.setAllowedOrigins(teste);
     //Arrays.asList(APP_URLS_CORS)
 

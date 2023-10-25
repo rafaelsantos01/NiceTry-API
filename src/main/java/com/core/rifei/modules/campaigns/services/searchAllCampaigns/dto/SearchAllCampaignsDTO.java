@@ -26,6 +26,8 @@ public class SearchAllCampaignsDTO {
 
   private boolean status;
 
+  private String type;
+
   private String urlImage;
 
   private int numberTicketsPurchased;

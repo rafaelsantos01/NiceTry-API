@@ -2,6 +2,7 @@ package com.core.rifei.shared.mercadoPago.services.verifyStatusPayment;
 
 import com.core.rifei.modules.order.entityes.Orders;
 import com.core.rifei.modules.order.repository.OrdersRepository;
+import com.core.rifei.modules.winners.services.numberslook.NumbersLookService;
 import com.core.rifei.shared.mercadoPago.ENUM.STATUSPAYMENTMP;
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.payment.PaymentClient;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +33,8 @@ public class VerifyPayment {
   @Value("${app.access_token_mp}")
   private String acessToken;
 
+  @Autowired
+  NumbersLookService numbersLookService;
   private static Logger logger = LoggerFactory.getLogger(VerifyPayment.class);
 
   ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -38,9 +42,9 @@ public class VerifyPayment {
     // Inicialize o agendador no construtor
     scheduler = Executors.newScheduledThreadPool(1);
 
-    long initialDelay = 1;
-    long period = 3;
-    TimeUnit unit = TimeUnit.HOURS;
+    long initialDelay = 2;
+    long period = 10;
+    TimeUnit unit = TimeUnit.MINUTES;
 
     scheduler.scheduleAtFixedRate(this::isPixPaid, initialDelay, period, unit);
   }
@@ -48,7 +52,6 @@ public class VerifyPayment {
 
   public void isPixPaid(){
     try{
-      System.out.println("Iniciando a verificação do status do pagamento");
       logger.info("Iniciando a verificação do status do pagamento");
       MercadoPagoConfig.setAccessToken(acessToken);
 
@@ -66,6 +69,7 @@ public class VerifyPayment {
 
             orders.setPayment(true);
             orders.setCheckoutDate(timestamp);
+            numbersLookService.handle(orders.getId());
           }
           orders.setStatusPayment(payment.getStatus());
 

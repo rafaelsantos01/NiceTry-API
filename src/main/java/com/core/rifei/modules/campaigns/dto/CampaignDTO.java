@@ -13,6 +13,8 @@ public class CampaignDTO {
 
   private UUID id;
 
+  private String type;
+
   private String name;
 
   private String description;

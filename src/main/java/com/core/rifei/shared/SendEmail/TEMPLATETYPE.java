@@ -10,7 +10,9 @@ public enum TEMPLATETYPE {
 
   CHANGE_PASSWORD(3),
 
-  PAYMENT(4);
+  PAYMENT(4),
+
+  NUMBERLOOK(5);
 
   private int template;
 

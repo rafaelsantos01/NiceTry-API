@@ -16,4 +16,6 @@ public class SendEmailServiceDTO {
     private int templateType;
 
     private String campaignName;
+
+    private String numbersLook;
 }

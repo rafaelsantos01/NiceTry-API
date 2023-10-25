@@ -4,12 +4,14 @@ import com.core.rifei.shared.mercadoPago.dto.CreatePixRequestDTO;
 import com.core.rifei.shared.mercadoPago.dto.CreatePixResponseDTO;
 import com.core.rifei.shared.mercadoPago.dto.GetQRCodeAndTicketURLDTO;
 import com.mercadopago.MercadoPagoConfig;
-import com.mercadopago.client.payment.PaymentClient;
-import com.mercadopago.client.payment.PaymentCreateRequest;
-import com.mercadopago.client.payment.PaymentPayerRequest;
+import com.mercadopago.client.payment.*;
 import com.mercadopago.resources.payment.Payment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,15 +28,43 @@ public class PixPaymentService {
 
       PaymentClient client = new PaymentClient();
 
+      List<PaymentItemRequest> items = new ArrayList<>();
+
+      String[] nameParts = data.getName().split(" ", 2);
+      String firstName = nameParts[0];
+      String lastName = nameParts.length > 1 ? nameParts[1] : "";
+
+      PaymentItemRequest item =
+        PaymentItemRequest.builder()
+          .id(data.getId().toString())
+          .title(data.getItem().getTitle())
+          .description(data.getItem().getDescription())
+          .pictureUrl(data.getItem().getImgUrl())
+          .categoryId(data.getItem().getCategory())
+          .quantity(data.getItem().getQuantity())
+          .unitPrice(data.getItem().getUnitPrice())
+          .build();
+
+      items.add(item);
+
       PaymentCreateRequest paymentCreateRequest =
         PaymentCreateRequest.builder()
+          .additionalInfo(
+                  PaymentAdditionalInfoRequest.builder()
+                    .items(items)
+                    .payer(
+                      PaymentAdditionalInfoPayerRequest.builder()
+                        .firstName(firstName)
+                        .lastName(lastName)
+                        .build()
+                ).build())
           .transactionAmount(data.getValue())
           .paymentMethodId("pix")
-          .description("Campanha:"+data.getCampaignName())
+          .description("Campanha: "+ data.getItem().getTitle() + " " + data.getItem().getDescription())
           .payer(
             PaymentPayerRequest.builder()
-              .firstName(data.getName())
-              .lastName(data.getName())
+              .firstName(firstName)
+              .lastName(lastName)
               .email(data.getEmail())
               .build())
           .build();

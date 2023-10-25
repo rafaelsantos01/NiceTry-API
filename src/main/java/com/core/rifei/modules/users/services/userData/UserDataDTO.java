@@ -19,7 +19,7 @@ public class UserDataDTO {
 
   private String phoneNumber;
 
-  private String tradeLink;
+  private String observation;
 
   private boolean email_verify;
 }

@@ -11,16 +11,20 @@
         <constraints nullable="false" />
       </column>
 
-      <column type="varchar(80)" name="name">
+      <column type="varchar(35)" name="name">
+        <constraints nullable="false" />
+      </column>
+
+      <column type="varchar(20)" name="type">
         <constraints nullable="false" />
       </column>
 
 
-      <column type="varchar(150)" name="description">
+      <column type="varchar(40)" name="description">
         <constraints nullable="false" />
       </column>
 
-      <column type="varchar(30)" name="label">
+      <column type="varchar(40)" name="label">
         <constraints nullable="false" />
       </column>
 
@@ -28,11 +32,11 @@
         <constraints nullable="false" />
       </column>
 
-      <column type="decimal" name="product_value">
+      <column type="numeric" name="product_value">
         <constraints nullable="false" />
       </column>
 
-      <column type="decimal" name="number_value">
+      <column type="numeric" name="number_value">
         <constraints nullable="false" />
       </column>
 

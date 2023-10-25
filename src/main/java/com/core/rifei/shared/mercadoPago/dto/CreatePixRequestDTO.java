@@ -11,11 +11,11 @@ import java.util.UUID;
 public class CreatePixRequestDTO {
   private String email;
 
-  private String campaignName;
-
   private BigDecimal value;
 
   private UUID id;
 
   private String name;
+
+  private ItemCampaignDTO item;
 }

@@ -16,4 +16,6 @@ public class ChengeDataUserDTO {
   private String observation;
 
   private String numberPhone;
+
+  private String cpf;
 }

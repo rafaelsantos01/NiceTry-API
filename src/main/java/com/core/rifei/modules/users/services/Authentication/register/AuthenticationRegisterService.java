@@ -55,12 +55,12 @@ public class AuthenticationRegisterService {
     Users newUser = new Users();
 
     newUser.setName(data.getName());
-    newUser.setCpf(data.getCpf());
+    //newUser.setCpf(data.getCpf());
     newUser.setLogin(data.getLogin());
     newUser.setPassword(encryptedPassword);
-    newUser.setPermission(data.getPermission());
+    newUser.setPermission(UserRole.USER);
     newUser.setCreateDate(timestamp);
-    newUser.setTradeLink(data.getTradeLink());
+    //newUser.setObservation(data.getTradeLink());
     newUser.setStatus(false);
 
     Users users = usersRepository.saveAndFlush(newUser);
@@ -74,7 +74,7 @@ public class AuthenticationRegisterService {
       SendEmailServiceDTO sendEmailServiceDTO = new SendEmailServiceDTO();
       sendEmailServiceDTO.setUserName(users.getName());
       sendEmailServiceDTO.setUserMail(users.getUsername());
-      sendEmailServiceDTO.setLink("http://localhost:3000/confirmation/"+ users.getId());
+      sendEmailServiceDTO.setLink("https://nicetry.com.br/confirmation/"+ users.getId());
       sendEmailServiceDTO.setTemplateType(TEMPLATETYPE.NEW_USER.getKey());
 
       sendEmailService.SendEmail(sendEmailServiceDTO);

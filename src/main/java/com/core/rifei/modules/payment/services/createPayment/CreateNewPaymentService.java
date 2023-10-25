@@ -13,6 +13,7 @@ import com.core.rifei.shared.SendEmail.SendEmailService;
 import com.core.rifei.shared.SendEmail.TEMPLATETYPE;
 import com.core.rifei.shared.SendEmail.dto.SendEmailServiceDTO;
 import com.core.rifei.shared.mercadoPago.ENUM.STATUSPAYMENTMP;
+import com.core.rifei.shared.mercadoPago.dto.ItemCampaignDTO;
 import com.core.rifei.shared.mercadoPago.services.createPix.PixPaymentService;
 import com.core.rifei.shared.mercadoPago.dto.CreatePixRequestDTO;
 import com.core.rifei.shared.mercadoPago.dto.CreatePixResponseDTO;
@@ -91,15 +92,23 @@ public class CreateNewPaymentService {
 
     CreatePaymentResponseDTO response = new CreatePaymentResponseDTO();
 
+    ItemCampaignDTO itemCampaignDTO = new ItemCampaignDTO();
+    itemCampaignDTO.setCategory("Campanha");
+    itemCampaignDTO.setTitle(campaigns.getName());
+    itemCampaignDTO.setQuantity(data.getQuantity());
+    itemCampaignDTO.setUnitPrice(campaigns.getNumberValue());
+    itemCampaignDTO.setImgUrl(campaigns.getUrlImage());
+    itemCampaignDTO.setDescription(campaigns.getDescription());
+
     CreatePixRequestDTO createPixRequestDTO = new CreatePixRequestDTO();
     createPixRequestDTO.setEmail(users.getLogin());
     createPixRequestDTO.setName(users.getName());
     createPixRequestDTO.setId(users.getId());
     createPixRequestDTO.setValue(campaigns.getNumberValue().multiply(new BigDecimal(data.getQuantity())));
-    createPixRequestDTO.setCampaignName(campaigns.getName());
-
+    createPixRequestDTO.setItem(itemCampaignDTO);
 
     CreatePixResponseDTO createPixResponseDTO = pixPaymentService.CreatePix(createPixRequestDTO);
+
     response.setUrl(createPixResponseDTO.getQr_code());
     response.setValue(createPixRequestDTO.getValue().toString());
 
@@ -109,17 +118,16 @@ public class CreateNewPaymentService {
     orders.setTicketUrl(createPixResponseDTO.getTicket_url());
     orders.setTransactionAmount(createPixResponseDTO.getTransaction_amount());
 
-    ordersRepository.saveAndFlush(orders);
-
     SendEmailServiceDTO sendEmailServiceDTO = new SendEmailServiceDTO();
     sendEmailServiceDTO.setTemplateType(TEMPLATETYPE.PAYMENT.getKey());
     sendEmailServiceDTO.setUserName(users.getName());
     sendEmailServiceDTO.setUserMail(users.getUsername());
     sendEmailServiceDTO.setLink(createPixResponseDTO.getTicket_url());
     sendEmailServiceDTO.setCampaignName(campaigns.getName());
+
     sendEmailService.SendEmail(sendEmailServiceDTO);
 
-
+    ordersRepository.saveAndFlush(orders);
 
     return response;
   }

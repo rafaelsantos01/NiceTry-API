@@ -39,8 +39,8 @@ public class Users implements UserDetails {
   @Column(name = "permission")
   private UserRole permission;
 
-  @Column(name = "trade_link")
-  private String tradeLink;
+  @Column(name = "observation")
+  private String observation;
 
   @Column(name = "phone_number")
   private String phoneNumber;

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Tag(name = "Campanha")
@@ -27,7 +28,7 @@ public class CreateNewCampaignController {
  @PostMapping
  @ResponseBody
  @PreAuthorize("hasRole('ROLE_ADMIN')")
-  public ResponseEntity<CampaignDTO> handle(@RequestBody CreateCampaignDTO data){
+  public ResponseEntity<CampaignDTO> handle(@RequestBody @Valid CreateCampaignDTO data){
 
     CampaignDTO campaigns = service.execute(data);
 

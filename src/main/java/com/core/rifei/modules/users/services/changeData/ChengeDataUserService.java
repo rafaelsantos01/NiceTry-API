@@ -4,6 +4,7 @@ import com.core.rifei.modules.users.entityes.Users;
 import com.core.rifei.modules.users.repository.UsersRepository;
 import com.core.rifei.modules.users.services.changeData.dto.ChengeDataUserDTO;
 import com.core.rifei.security.context.SetUserService;
+import com.core.rifei.utils.CpfAndCnpjValidation;
 import com.core.rifei.utils.PasswordValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +24,9 @@ public class ChengeDataUserService {
   @Autowired
   PasswordValidation passwordValidation;
 
+  @Autowired
+  CpfAndCnpjValidation cpfAndCnpjValidation;
+
   public void execute(ChengeDataUserDTO data) {
 
     Users userLogged = setUserService.execute();
@@ -41,7 +45,15 @@ public class ChengeDataUserService {
     }
 
     if(data.getObservation() != null && !data.getObservation().isEmpty()){
-      users.setTradeLink(data.getObservation());
+      users.setObservation(data.getObservation());
+    }
+
+    if(data.getCpf() != null && !data.getCpf().isEmpty()){
+      if(cpfAndCnpjValidation.isCPF(data.getCpf())){
+        users.setCpf(data.getCpf());
+      }else{
+        throw new Error("CPFInvalid");
+      }
     }
 
     usersRepository.saveAndFlush(users);

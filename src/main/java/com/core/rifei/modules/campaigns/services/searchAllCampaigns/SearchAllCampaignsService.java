@@ -40,6 +40,7 @@ public class SearchAllCampaignsService {
       campaignDTO.setProductValue(campaign.getProductValue());
       campaignDTO.setStatus(campaign.isStatus());
       campaignDTO.setUrlImage(campaign.getUrlImage());
+      campaignDTO.setType(campaign.getType());
 
       if(active){
         List<Orders> orders =  ordersRepository.findAllByCampaigns(campaign);
