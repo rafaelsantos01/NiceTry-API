@@ -1,8 +1,13 @@
 package com.core.rifei.security;
 
 
+import com.auth0.jwt.exceptions.SignatureVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.core.rifei.config.errors.implementatins.ErrorAuth;
 import com.core.rifei.modules.users.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,16 +28,27 @@ public class SecurityFilter extends OncePerRequestFilter{
   @Autowired
   UsersRepository userRepository;
 
+  @Autowired
+  private ErrorAuth errorAuth;
+
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-    String token = this.recoverToken(request);
-    if(token != null){
-      String login = tokenService.validateToken(token);
-      UserDetails user = userRepository.findByLogin(login);
+   try{
+     String token = this.recoverToken(request);
+     if(token != null && tokenService.validateToken(token)){
+       String login = tokenService.getAuthentication(token);
+       UserDetails user = userRepository.findByLogin(login);
 
-      UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-      SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
+       UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+       SecurityContextHolder.getContext().setAuthentication(authentication);
+     }
+   }catch (TokenExpiredException exception) {
+     errorAuth.tokenExpired(response);
+     return;
+   } catch (InsufficientAuthenticationException exception) {
+     errorAuth.errorAuth(response);
+     return;
+   }
     filterChain.doFilter(request, response);
   }
 

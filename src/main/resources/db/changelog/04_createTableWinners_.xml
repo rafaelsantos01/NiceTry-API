@@ -17,11 +17,11 @@
       </column>
 
       <column type="timestamp" name="draw_date">
-        <constraints nullable="false" />
+        <constraints nullable="true" />
       </column>
 
       <column type="boolean" name="payment">
-        <constraints nullable="false" />
+        <constraints nullable="true" />
       </column>
 
       <column type="int" name="number">
@@ -30,7 +30,7 @@
 
 
       <column type="boolean" name="winner" >
-        <constraints nullable="false" />
+        <constraints nullable="true" />
       </column>
 
 

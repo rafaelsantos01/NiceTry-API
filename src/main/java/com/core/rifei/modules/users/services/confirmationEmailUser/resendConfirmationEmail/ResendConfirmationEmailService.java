@@ -5,13 +5,11 @@ import com.core.rifei.modules.users.repository.UsersRepository;
 import com.core.rifei.modules.users.services.confirmationEmailUser.resendConfirmationEmail.dto.ResendConfirmationEmailDTO;
 import com.core.rifei.security.context.SetUserService;
 import com.core.rifei.shared.SendEmail.SendEmailService;
-import com.core.rifei.shared.SendEmail.TEMPLATETYPE;
+import com.core.rifei.shared.SendEmail.ENUM.TEMPLATETYPE;
 import com.core.rifei.shared.SendEmail.dto.SendEmailServiceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import javax.mail.MessagingException;
 
 @Service
 public class ResendConfirmationEmailService {

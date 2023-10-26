@@ -1,55 +1,23 @@
 <?xml version="1.1" encoding="UTF-8"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-  <changeSet author="rafinhapsantos50@gmail.com" id="campaigns-4">
+  <changeSet author="rafinhapsantos50@gmail.com" id="orders-3">
 
-    <createTable tableName="campaigns">
+    <createTable tableName="partner_code">
+
       <column type="uuid" name="id" defaultValueComputed="uuid_generate_v4()">
-        <constraints nullable="false" primaryKey="true" primaryKeyName="campaignsPK" />
+        <constraints nullable="false" primaryKey="true" primaryKeyName="partner_codePK" />
       </column>
 
-      <column type="text" name="url_image">
+      <column type="uuid" name="id_user">
         <constraints nullable="false" />
       </column>
 
-      <column type="varchar(35)" name="name">
+      <column type="varchar(30)" name="code">
         <constraints nullable="false" />
       </column>
 
-      <column type="varchar(20)" name="type">
+      <column type="integer" name="percentage">
         <constraints nullable="false" />
-      </column>
-
-
-      <column type="varchar(40)" name="description">
-        <constraints nullable="false" />
-      </column>
-
-      <column type="varchar(40)" name="label">
-        <constraints nullable="false" />
-      </column>
-
-      <column type="int" name="max_numbers">
-        <constraints nullable="false" />
-      </column>
-
-      <column type="numeric(10,2)" name="product_value">
-        <constraints nullable="false" />
-      </column>
-
-      <column type="numeric(10,2)" name="number_value">
-        <constraints nullable="false" />
-      </column>
-
-      <column type="boolean" name="status">
-        <constraints nullable="false" />
-      </column>
-
-      <column type="UUID" name="user_created">
-        <constraints nullable="true" />
-      </column>
-
-      <column type="UUID" name="user_updated">
-        <constraints nullable="true" />
       </column>
 
       <column type="timestamp" name="updated_at" defaultValueComputed="now()">
@@ -60,11 +28,30 @@
         <constraints nullable="true" />
       </column>
 
+      <column type="UUID" name="user_created">
+        <constraints nullable="true" />
+      </column>
+
+      <column type="UUID" name="user_updated">
+        <constraints nullable="true" />
+      </column>
     </createTable>
 
+    <addForeignKeyConstraint baseColumnNames="id_user"
+                             baseTableName="partner_code"
+                             constraintName="affiliates_id_user_partner_code_fk"
+                             deferrable="false"
+                             initiallyDeferred="false"
+                             validate="true"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+    />
+
+
+
     <addForeignKeyConstraint baseColumnNames="user_created"
-                             baseTableName="campaigns"
-                             constraintName="serCreated_campaign_fk"
+                             baseTableName="partner_code"
+                             constraintName="serCreated_affiliates_partner_code_fk"
                              deferrable="false"
                              initiallyDeferred="false"
                              validate="true"
@@ -73,14 +60,17 @@
     />
 
     <addForeignKeyConstraint baseColumnNames="user_updated"
-                             baseTableName="campaigns"
-                             constraintName="userUpdated_campaign_fk"
+                             baseTableName="partner_code"
+                             constraintName="userUpdated_partner_code_fk"
                              deferrable="false"
                              initiallyDeferred="false"
                              validate="true"
                              referencedTableName="users"
                              referencedColumnNames="id"
     />
+
+
+
 
   </changeSet>
 </databaseChangeLog>

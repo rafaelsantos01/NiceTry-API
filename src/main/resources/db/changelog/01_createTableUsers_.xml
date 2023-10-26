@@ -11,7 +11,7 @@
         <constraints nullable="false" />
       </column>
 
-      <column type="varchar" name="cpf">
+      <column type="varchar(11)" name="cpf">
         <constraints nullable="true"  />
       </column>
 
@@ -43,8 +43,6 @@
       <column type="timestamp" name="create_date">
         <constraints nullable="false"  />
       </column>
-
-
     </createTable>
   </changeSet>
 </databaseChangeLog>

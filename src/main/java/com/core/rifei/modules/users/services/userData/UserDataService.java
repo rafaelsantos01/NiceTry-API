@@ -2,13 +2,11 @@ package com.core.rifei.modules.users.services.userData;
 
 import com.core.rifei.modules.users.entityes.Users;
 import com.core.rifei.modules.users.repository.UsersRepository;
+import com.core.rifei.modules.users.services.userData.dto.UserDataDTO;
 import com.core.rifei.security.context.SetUserService;
 import com.core.rifei.utils.MaskCPF;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserDataService {

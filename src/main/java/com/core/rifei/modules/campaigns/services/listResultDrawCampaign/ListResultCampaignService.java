@@ -5,6 +5,7 @@ import com.core.rifei.modules.campaigns.repository.CampaignsRepository;
 import com.core.rifei.modules.campaigns.services.listResultDrawCampaign.dtos.ListResultWiner;
 import com.core.rifei.modules.winners.entityes.Winner;
 import com.core.rifei.modules.winners.repository.WinnerRepository;
+import com.core.rifei.utils.EmailMasker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,10 @@ public class ListResultCampaignService {
   CampaignsRepository campaignsRepository;
 
 
+  @Autowired
+  EmailMasker emailMasker;
+
+
   public List<ListResultWiner> execute(UUID idCampaign) {
 
     List<ListResultWiner> response = new ArrayList<>();
@@ -37,13 +42,13 @@ public class ListResultCampaignService {
       throw new Error("CampaignActive");
     }
 
-    List<Winner>  winnerList =  winnerRepository.findByCampaigns(campaigns);
+    List<Winner>  winnerList =  winnerRepository.findByPaymentTrueAndCampaigns(campaigns);
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     for(Winner winner:winnerList){
       ListResultWiner listResultWiner = new ListResultWiner();
 
-      listResultWiner.setEmail(winner.getIdUser().getLogin());
+      listResultWiner.setEmail(emailMasker.maskEmail(winner.getIdUser().getLogin()));
       listResultWiner.setUserName(winner.getIdUser().getName());
       listResultWiner.setCampaignName(winner.getCampaigns().getName());
       listResultWiner.setNumber(winner.getNumber());

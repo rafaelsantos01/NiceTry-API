@@ -10,7 +10,7 @@ import com.core.rifei.modules.users.entityes.Users;
 import com.core.rifei.modules.users.repository.UsersRepository;
 import com.core.rifei.security.context.SetUserService;
 import com.core.rifei.shared.SendEmail.SendEmailService;
-import com.core.rifei.shared.SendEmail.TEMPLATETYPE;
+import com.core.rifei.shared.SendEmail.ENUM.TEMPLATETYPE;
 import com.core.rifei.shared.SendEmail.dto.SendEmailServiceDTO;
 import com.core.rifei.shared.mercadoPago.ENUM.STATUSPAYMENTMP;
 import com.core.rifei.shared.mercadoPago.dto.ItemCampaignDTO;

@@ -1,4 +1,4 @@
-package com.core.rifei.shared.SendEmail;
+package com.core.rifei.shared.SendEmail.ENUM;
 
 public enum TEMPLATETYPE {
 

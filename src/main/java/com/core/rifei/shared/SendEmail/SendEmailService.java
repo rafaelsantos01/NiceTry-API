@@ -49,6 +49,7 @@ public class SendEmailService {
           .replaceAll("\\{campaignName}", data.getCampaignName())
           .replaceAll("\\{numbersLook}", data.getNumbersLook());
 
+
         String titleReplace = templates.getTitle().replace("{name}",data.getUserName());
 
         MimeMessage message = javaMailSender.createMimeMessage();

@@ -43,7 +43,7 @@ public class VerifyPayment {
     scheduler = Executors.newScheduledThreadPool(1);
 
     long initialDelay = 2;
-    long period = 10;
+    long period = 3;
     TimeUnit unit = TimeUnit.MINUTES;
 
     scheduler.scheduleAtFixedRate(this::isPixPaid, initialDelay, period, unit);
@@ -77,6 +77,7 @@ public class VerifyPayment {
         }
       }
     }catch (Exception e){
+      logger.error("Erro ao verificar pagamento");
       throw new Error("ErrorVerifyPayment");
     }
 

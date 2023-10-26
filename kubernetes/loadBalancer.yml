@@ -7,6 +7,6 @@ spec:
     app: my-app
   ports:
     - protocol: TCP
-      port: 80  # A porta que o serviço escuta
+      port: 8080  # A porta que o serviço escuta
       targetPort: 8080  # A porta que será encaminhada para as instâncias
   type: LoadBalancer

@@ -80,7 +80,73 @@ public class DrawCampaignService {
 //    campaigns.setStatus(false);
 //    campaignsRepository.save(campaigns);
 
+//    SecureRandom secureRandom = new SecureRandom();
+//    Campaigns campaign = campaignsRepository.findById(idCampaign).orElse(null);
+//
+//    if (campaign == null) {
+//      throw new Error("CampaignNotFound");
+//    }
+//
+//    if (!campaign.isStatus()) {
+//      throw new Error("CampaignInactive");
+//    }
+//
+//    int maxNumbers = campaign.getMaxNumbers();
+//
+//    List<Orders> ordersList = ordersRepository.findByCampaignsAndStatusPayment(campaign, STATUSPAYMENTMP.APPROVED.getKey());
+//
+//    List<Winner> winnersSave = new ArrayList<>();
+//    List<Integer> availableNumbers = new ArrayList<>();
+//
+//    for (int i = 1; i <= maxNumbers; i++) {
+//      availableNumbers.add(i);
+//    }
+//
+//    for (Orders order : ordersList) {
+//      long currentTimeMillis = System.currentTimeMillis();
+//      Timestamp timestamp = new Timestamp(currentTimeMillis);
+//
+//      int numberOfTickets = order.getNumbers();
+//
+//      if (availableNumbers.size() < numberOfTickets) {
+//        throw new Error("NotEnoughAvailableNumbers");
+//      }
+//
+//      List<Integer> selectedNumbers = new ArrayList<>();
+//
+//      for (int i = 0; i < numberOfTickets; i++) {
+//        int randomIndex = secureRandom.nextInt(availableNumbers.size());
+//        int uniqueNumber = availableNumbers.remove(randomIndex);
+//        selectedNumbers.add(uniqueNumber);
+//
+//        Winner winner = new Winner();
+//        winner.setPayment(true);
+//        winner.setIdUser(order.getUsers());
+//        winner.setOrders(order);
+//        winner.setNumber(uniqueNumber);
+//        winner.setCampaigns(order.getCampaigns());
+//        winner.setDrawDate(timestamp);
+//        winner.setWinner(false);
+//        winnersSave.add(winner);
+//      }
+//    }
+//
+//    int numberOfWinners = winnersSave.size();
+//
+//    if (numberOfWinners > 0) {
+//      int randomIndex = secureRandom.nextInt(numberOfWinners);
+//      winnersSave.get(randomIndex).setWinner(true);
+//    }
+//
+//    winnerRepository.saveAllAndFlush(winnersSave);
+//
+//    campaign.setStatus(false);
+//    campaignsRepository.save(campaign);
+
     SecureRandom secureRandom = new SecureRandom();
+    long currentTimeMillis = System.currentTimeMillis();
+    Timestamp timestamp = new Timestamp(currentTimeMillis);
+
     Campaigns campaign = campaignsRepository.findById(idCampaign).orElse(null);
 
     if (campaign == null) {
@@ -91,57 +157,27 @@ public class DrawCampaignService {
       throw new Error("CampaignInactive");
     }
 
-    int maxNumbers = campaign.getMaxNumbers();
+    List<Winner> winners = winnerRepository.findByPaymentTrueAndCampaigns(campaign);
 
-    List<Orders> ordersList = ordersRepository.findByCampaignsAndStatusPayment(campaign, STATUSPAYMENTMP.APPROVED.getKey());
-
-    List<Winner> winnersSave = new ArrayList<>();
     List<Integer> availableNumbers = new ArrayList<>();
-
-    for (int i = 1; i <= maxNumbers; i++) {
-      availableNumbers.add(i);
+    for (Winner winner :winners) {
+      availableNumbers.add(winner.getNumber());
     }
 
-    for (Orders order : ordersList) {
-      long currentTimeMillis = System.currentTimeMillis();
-      Timestamp timestamp = new Timestamp(currentTimeMillis);
+    int randomIndex = secureRandom.nextInt(availableNumbers.size());
+    int selectedNumber = availableNumbers.get(randomIndex);
 
-      int numberOfTickets = order.getNumbers();
 
-      if (availableNumbers.size() < numberOfTickets) {
-        throw new Error("NotEnoughAvailableNumbers");
+    for (Winner winner :winners) {
+      if(winner.getNumber() == selectedNumber){
+        winner.setWinner(true);
       }
-
-      List<Integer> selectedNumbers = new ArrayList<>();
-
-      for (int i = 0; i < numberOfTickets; i++) {
-        int randomIndex = secureRandom.nextInt(availableNumbers.size());
-        int uniqueNumber = availableNumbers.remove(randomIndex);
-        selectedNumbers.add(uniqueNumber);
-
-        Winner winner = new Winner();
-        winner.setPayment(true);
-        winner.setIdUser(order.getUsers());
-        winner.setOrders(order);
-        winner.setNumber(uniqueNumber);
-        winner.setCampaigns(order.getCampaigns());
-        winner.setDrawDate(timestamp);
-        winner.setWinner(false);
-        winnersSave.add(winner);
-      }
+      winner.setDrawDate(timestamp);
     }
-
-    int numberOfWinners = winnersSave.size();
-
-    if (numberOfWinners > 0) {
-      int randomIndex = secureRandom.nextInt(numberOfWinners);
-      winnersSave.get(randomIndex).setWinner(true);
-    }
-
-    winnerRepository.saveAllAndFlush(winnersSave);
 
     campaign.setStatus(false);
     campaignsRepository.save(campaign);
+    winnerRepository.saveAllAndFlush(winners);
   }
 }
 

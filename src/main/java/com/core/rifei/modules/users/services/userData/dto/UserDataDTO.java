@@ -1,4 +1,4 @@
-package com.core.rifei.modules.users.services.userData;
+package com.core.rifei.modules.users.services.userData.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -7,7 +7,7 @@ import com.core.rifei.modules.order.repository.OrdersRepository;
 import com.core.rifei.modules.winners.entityes.Winner;
 import com.core.rifei.modules.winners.repository.WinnerRepository;
 import com.core.rifei.shared.SendEmail.SendEmailService;
-import com.core.rifei.shared.SendEmail.TEMPLATETYPE;
+import com.core.rifei.shared.SendEmail.ENUM.TEMPLATETYPE;
 import com.core.rifei.shared.SendEmail.dto.SendEmailServiceDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +40,12 @@ public class NumbersLookService {
     long currentTimeMillis = System.currentTimeMillis();
     Timestamp timestamp = new Timestamp(currentTimeMillis);
     SecureRandom secureRandom = new SecureRandom();
+
     Orders orders = ordersRepository.findById(order_id).orElse(null);
     if (orders == null) {
       throw new Error("OrderNotFound");
     }
+
     Campaigns campaigns = campaignsRepository.findById(orders.getCampaigns().getId()).orElse(null);
     if (campaigns == null) {
       throw new Error("CampaignNotFound");
@@ -96,9 +98,7 @@ public class NumbersLookService {
       sendEmailServiceDTO.setUserName(orders.getUsers().getName());
       sendEmailServiceDTO.setUserMail(orders.getUsers().getUsername());
       sendEmailServiceDTO.setCampaignName(campaigns.getName());
-      System.out.println(numbersLookValid);
       sendEmailService.SendEmail(sendEmailServiceDTO);
-
 
       winnerRepository.saveAllAndFlush(winnersSave);
     }else{

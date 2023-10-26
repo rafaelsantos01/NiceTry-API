@@ -56,17 +56,17 @@ public class AuthenticationLoginService {
       Authentication auth = authenticationManager.authenticate(usernamePassword);
 
       if (auth.isAuthenticated()) {
-        // Obter as permissões do usuário autenticado
         List<String> permissions = auth.getAuthorities()
           .stream()
           .map(GrantedAuthority::getAuthority)
           .collect(Collectors.toList());
 
 
-        String token = tokenService.generateToken((Users) auth.getPrincipal());
+        String accessToken = tokenService.generateToken((Users) auth.getPrincipal());
+        String refreshToken = tokenService.generateRefreshToken((Users) auth.getPrincipal());
 
-        loginResponseDTO.setAccess_token(token);
-        loginResponseDTO.setRefresh_token(token);
+        loginResponseDTO.setAccess_token(accessToken);
+        loginResponseDTO.setRefresh_token(refreshToken);
         loginResponseDTO.setPermission(permissions);
       } else {
         throw new Error("LoginFail");
