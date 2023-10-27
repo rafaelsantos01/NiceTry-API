@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -28,14 +30,17 @@ public class PixPaymentService {
 
       PaymentClient client = new PaymentClient();
 
+
+      OffsetDateTime currentDate = OffsetDateTime.now(ZoneOffset.UTC);
+      OffsetDateTime expirationDate = currentDate.plusHours(4);
+
       List<PaymentItemRequest> items = new ArrayList<>();
 
       String[] nameParts = data.getName().split(" ", 2);
       String firstName = nameParts[0];
       String lastName = nameParts.length > 1 ? nameParts[1] : "";
 
-      PaymentItemRequest item =
-        PaymentItemRequest.builder()
+      PaymentItemRequest item = PaymentItemRequest.builder()
           .id(data.getId().toString())
           .title(data.getItem().getTitle())
           .description(data.getItem().getDescription())
@@ -43,23 +48,22 @@ public class PixPaymentService {
           .categoryId(data.getItem().getCategory())
           .quantity(data.getItem().getQuantity())
           .unitPrice(data.getItem().getUnitPrice())
-          .build();
-
+        .build();
       items.add(item);
 
-      PaymentCreateRequest paymentCreateRequest =
-        PaymentCreateRequest.builder()
-          .additionalInfo(
-                  PaymentAdditionalInfoRequest.builder()
+      PaymentCreateRequest paymentCreateRequest = PaymentCreateRequest.builder()
+          .additionalInfo(PaymentAdditionalInfoRequest
+                    .builder()
                     .items(items)
                     .payer(
                       PaymentAdditionalInfoPayerRequest.builder()
                         .firstName(firstName)
                         .lastName(lastName)
                         .build()
-                ).build())
+                    ).build())
           .transactionAmount(data.getValue())
           .paymentMethodId("pix")
+          .dateOfExpiration(expirationDate)//teste expiração em 4hrs
           .description("Campanha: "+ data.getItem().getTitle() + " " + data.getItem().getDescription())
           .payer(
             PaymentPayerRequest.builder()
@@ -68,8 +72,6 @@ public class PixPaymentService {
               .email(data.getEmail())
               .build())
           .build();
-
-      client.create(paymentCreateRequest);
 
       Payment payment = client.create(paymentCreateRequest);
 
