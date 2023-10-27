@@ -10,6 +10,7 @@ import com.core.rifei.shared.SendEmail.ENUM.TEMPLATETYPE;
 import com.core.rifei.shared.SendEmail.dto.SendEmailServiceDTO;
 import com.core.rifei.utils.PasswordValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,9 @@ public class AuthenticationRegisterService {
 
   @Autowired
   SendEmailService sendEmailService;
+
+  @Value("${app.niceTry.domain.url}")
+  private String domain;
 
 
   public UsersDTO register(RegisterDTO data){
@@ -73,7 +77,7 @@ public class AuthenticationRegisterService {
       SendEmailServiceDTO sendEmailServiceDTO = new SendEmailServiceDTO();
       sendEmailServiceDTO.setUserName(users.getName());
       sendEmailServiceDTO.setUserMail(users.getUsername());
-      sendEmailServiceDTO.setLink("https://nicetry.com.br/confirmation/"+ users.getId());
+      sendEmailServiceDTO.setLink(domain+"/confirmation/"+ users.getId());
       sendEmailServiceDTO.setTemplateType(TEMPLATETYPE.NEW_USER.getKey());
 
       sendEmailService.SendEmail(sendEmailServiceDTO);

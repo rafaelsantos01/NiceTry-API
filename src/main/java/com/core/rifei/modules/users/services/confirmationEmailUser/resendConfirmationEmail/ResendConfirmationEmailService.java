@@ -8,6 +8,7 @@ import com.core.rifei.shared.SendEmail.SendEmailService;
 import com.core.rifei.shared.SendEmail.ENUM.TEMPLATETYPE;
 import com.core.rifei.shared.SendEmail.dto.SendEmailServiceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,8 @@ public class ResendConfirmationEmailService {
   @Autowired
   SendEmailService sendEmailService;
 
+  @Value("${app.niceTry.domain.url}")
+  private String domain;
 
   public void execute(ResendConfirmationEmailDTO data) {
 
@@ -50,7 +53,7 @@ public class ResendConfirmationEmailService {
       SendEmailServiceDTO sendEmailServiceDTO = new SendEmailServiceDTO();
       sendEmailServiceDTO.setUserName(users.getName());
       sendEmailServiceDTO.setUserMail(users.getUsername());
-      sendEmailServiceDTO.setLink("http://localhost:3000/confirmation/"+ users.getId());
+      sendEmailServiceDTO.setLink(domain+"/confirmation/"+ users.getId());
       sendEmailServiceDTO.setTemplateType(TEMPLATETYPE.RESEND_CONFIRMATION_EMAIL.getKey());
 
       sendEmailService.SendEmail(sendEmailServiceDTO);
