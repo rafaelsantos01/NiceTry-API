@@ -15,6 +15,6 @@ public class EmailMasker {
       return email;
     }
 
-    return email.substring(0, 5) + "***" + email.substring(index);
+    return email.substring(0, 5) + "******" + email.substring(index);
   }
 }

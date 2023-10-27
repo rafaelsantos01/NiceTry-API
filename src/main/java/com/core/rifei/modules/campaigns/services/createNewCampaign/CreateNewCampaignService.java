@@ -20,6 +20,26 @@ public class CreateNewCampaignService {
 
   public CampaignDTO execute(CreateCampaignDTO data) {
 
+    if(data.getMaxNumbers() <= 5){
+      throw new Error("CampaignMustHaveMoreThan5Numbers");
+    }
+
+    if(data.getType().length() > 20){
+      throw new Error("maximumNumberType");
+    }
+
+    if(data.getName().length() > 20){
+      throw new Error("maximumNumberName");
+    }
+
+    if(data.getDescription().length() > 30){
+      throw new Error("maximumNumberDescription");
+    }
+
+    if(data.getLabel().length() > 30){
+      throw new Error("maximumNumberLabel");
+    }
+
     CampaignDTO campaignDTO = new CampaignDTO();
 
     Campaigns campaigns = new Campaigns();

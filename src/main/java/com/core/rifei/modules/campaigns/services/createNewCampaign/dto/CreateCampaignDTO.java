@@ -12,18 +12,19 @@ import java.math.BigDecimal;
 @Setter
 public class CreateCampaignDTO {
 
+  @NotNull @NotEmpty
   private String urlImage;
 
-  @NotNull @NotEmpty @Size(max = 20)
+  @NotNull @NotEmpty
   private String type;
 
-  @NotNull @NotEmpty @Size(max = 20)
+  @NotNull @NotEmpty
   private String name;
 
-  @NotNull @NotEmpty @Size(max = 34)
+  @NotNull @NotEmpty
   private String description;
 
-  @NotNull @NotEmpty @Size(max = 30)
+  @NotNull @NotEmpty
   private String label;
 
   private int maxNumbers;

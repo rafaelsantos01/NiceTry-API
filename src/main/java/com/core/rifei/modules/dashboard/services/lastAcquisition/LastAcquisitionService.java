@@ -5,6 +5,7 @@ import com.core.rifei.modules.order.entityes.Orders;
 import com.core.rifei.modules.order.repository.OrdersRepository;
 import com.core.rifei.modules.dashboard.services.lastAcquisition.dto.LastAcquisitionDTO;
 import com.core.rifei.modules.users.repository.UsersRepository;
+import com.core.rifei.utils.EmailMasker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,9 @@ public class LastAcquisitionService {
   @Autowired
   CampaignsRepository campaignsRepository;
 
+  @Autowired
+  EmailMasker emailMasker;
+
 
   public List<LastAcquisitionDTO> execute() {
     List<LastAcquisitionDTO> response = new ArrayList<>();
@@ -35,7 +39,7 @@ public class LastAcquisitionService {
       LastAcquisitionDTO acquisitionDTO = new LastAcquisitionDTO();
 
       acquisitionDTO.setNameCampaign(ticket.getCampaigns().getName());
-      acquisitionDTO.setEmail(ticket.getUsers().getUsername());
+      acquisitionDTO.setEmail(emailMasker.maskEmail(ticket.getUsers().getUsername()));
       acquisitionDTO.setName(ticket.getUsers().getName());
       acquisitionDTO.setValue(ticket.getCampaigns().getNumberValue().multiply(new BigDecimal(ticket.getNumbers())));
       response.add(acquisitionDTO);

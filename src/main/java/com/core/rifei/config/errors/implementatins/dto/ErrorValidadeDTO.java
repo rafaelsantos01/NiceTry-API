@@ -12,6 +12,9 @@ public class ErrorValidadeDTO {
 
   private String message;
 
+  public ErrorValidadeDTO(){
+  }
+
   public ErrorValidadeDTO(String field,String message){
     this.field = field;
     this.message = message;
