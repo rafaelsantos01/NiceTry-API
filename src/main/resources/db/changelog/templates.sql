@@ -10,4 +10,4 @@ VALUES
 
 INSERT INTO users (id, "name", cpf, email, phone_number, "password", observation, "permission", status, create_date)
 VALUES
-  (uuid_generate_v4(), 'Rafael Pereira Dos Santos', '11455703990', 'rafinhapsantos50@gmail.com', NULL, '$2a$10$VhybHOThoqCkaHpHhlkAQOj82Og8DemCaZfDD3ZxJcqUZH1.Ic84C', 'tradelinknovo', '0', false, '2023-10-05 12:26:37.714');
+  (uuid_generate_v4(), 'Rafael Pereira Dos Santos', '00000000000', 'rafinhapsantos50@gmail.com', NULL, '$2a$10$VhybHOThoqCkaHpHhlkAQOj82Og8DemCaZfDD3ZxJcqUZH1.Ic84C', 'tradelinknovo', '0', false, '2023-10-05 12:26:37.714');
