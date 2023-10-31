@@ -25,7 +25,7 @@ jobs:
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
 
       - name: Build docker image
-        run: docker buildx build --platform linux/arm64 .
+        run: docker buildx build --platform linux/arm64 -f Dockerfile
 
       #- name: Build docker image
       #  run: docker build -t rafaelsantos15/nice_try --platform linux/arm64
