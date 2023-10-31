@@ -25,7 +25,10 @@ jobs:
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
 
       - name: Build docker image
-        run: docker build -t rafaelsantos15/nice_try -f Dockerfile .
+        run: docker build -t rafaelsantos15/nice_try --platform linux/arm64
+
+     # - name: Build docker image
+      #  run: docker build -t rafaelsantos15/nice_try -f Dockerfile .
 
       - name: Push image docker
         run: docker push rafaelsantos15/nice_try

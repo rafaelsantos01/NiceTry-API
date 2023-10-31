@@ -8,12 +8,11 @@
 # Use a base image compatível com aarch64
 
 FROM openjdk:11-jre-slim
-# Copie o arquivo JAR do seu aplicativo Spring Boot para o contêiner
 COPY target/*.jar app.jar
-# Exponha a porta que o aplicativo Spring Boot escuta (se aplicável)
 EXPOSE 8080
-# Comando de inicialização do aplicativo Spring Boot
 CMD ["java", "-jar", "/app.jar"]
+
+
 
 #FROM ubuntu:latest AS build
 #RUN apt-get update
