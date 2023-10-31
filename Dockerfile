@@ -5,6 +5,7 @@
 #ENTRYPOINT ["java","-jar","/app.jar"]
 # Use uma base image compatível com aarch64
 # Use uma base image compatível com aarch64
+# Use a base image compatível com aarch64
 FROM arm64v8/openjdk:11-jre-slim-bionic
 # Copie o arquivo JAR do seu aplicativo Spring Boot para o contêiner
 COPY target/*.jar app.jar
@@ -12,7 +13,6 @@ COPY target/*.jar app.jar
 EXPOSE 8080
 # Comando de inicialização do aplicativo Spring Boot
 CMD ["java", "-jar", "/app.jar"]
-
 
 #FROM ubuntu:latest AS build
 #RUN apt-get update

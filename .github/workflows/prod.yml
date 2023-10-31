@@ -2,7 +2,8 @@ name: Deploy API NiceTry
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build:
@@ -16,15 +17,18 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
+
       - name: Build project
         run: mvn clean install -DskipTests
+
       - name: Login Docker Hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+
       - name: Build docker image
-        run: docker build -t rafaelsantos15/nice_try .
+        run: docker build -t rafaelsantos15/nice_try -f Dockerfile .
+
       - name: Push image docker
         run: docker push rafaelsantos15/nice_try
-
 
   deploy:
     needs: build
@@ -32,10 +36,67 @@ jobs:
     steps:
       - name: Pull image from docker hub
         run: docker pull rafaelsantos15/nice_try
+
       - name: Remove old docker container
         run: docker rm -f nice_try
+
       - name: Run docker container
         run: docker run -d -p 8080:8080 -e APP_DB_USERNAME=${{secrets.APP_DB_USERNAME}} -e APP_DB_PASSWORD='${{secrets.APP_DB_PASSWORD}}' -e APP_DB_URL=${{secrets.APP_DB_URL}} -e APP_ACCESS_TOKEN_MP='${{secrets.APP_ACCESS_TOKEN_MP}}' -e APP_HOST_EMAIL=${{secrets.APP_HOST_EMAIL}} -e APP_NUMBER_WHATSAPP='${{secrets.APP_NUMBER_WHATSAPP}}' -e APP_LOGIN_EMAIL='${{secrets.APP_LOGIN_EMAIL}}' -e APP_PORT_EMAIL=${{secrets.APP_PORT_EMAIL}} -e APP_PASSWORD_EMAIL='${{secrets.APP_PASSWORD_EMAIL}}' -e APP_URLS_CORS=${{secrets.APP_URLS_CORS}} -e SECRET_TOKEN='${{secrets.SECRET_TOKEN}}' --name nice_try rafaelsantos15/nice_try
+
+
+#name: Deploy API NiceTry
+#
+#on:
+#  push:
+#    branches: [main]
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Setup Java
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'temurin'
+#          java-version: '11'
+#      - name: Build project
+#        run: mvn clean install -DskipTests
+#      - name: Login Docker Hub
+#        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+#      - name: Build docker image
+#        run: docker build -t rafaelsantos15/nice_try .
+#      - name: Push image docker
+#        run: docker push rafaelsantos15/nice_try
+#
+#
+#  deploy:
+#    needs: build
+#    runs-on: self-hosted
+#    steps:
+#      - name: Pull image from docker hub
+#        run: docker pull rafaelsantos15/nice_try
+#      - name: Remove old docker container
+#        run: docker rm -f nice_try
+#      - name: Run docker container
+#        run: docker run -d -p 8080:8080 -e APP_DB_USERNAME=${{secrets.APP_DB_USERNAME}} -e APP_DB_PASSWORD='${{secrets.APP_DB_PASSWORD}}' -e APP_DB_URL=${{secrets.APP_DB_URL}} -e APP_ACCESS_TOKEN_MP='${{secrets.APP_ACCESS_TOKEN_MP}}' -e APP_HOST_EMAIL=${{secrets.APP_HOST_EMAIL}} -e APP_NUMBER_WHATSAPP='${{secrets.APP_NUMBER_WHATSAPP}}' -e APP_LOGIN_EMAIL='${{secrets.APP_LOGIN_EMAIL}}' -e APP_PORT_EMAIL=${{secrets.APP_PORT_EMAIL}} -e APP_PASSWORD_EMAIL='${{secrets.APP_PASSWORD_EMAIL}}' -e APP_URLS_CORS=${{secrets.APP_URLS_CORS}} -e SECRET_TOKEN='${{secrets.SECRET_TOKEN}}' --name nice_try rafaelsantos15/nice_try
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #  deploy:
