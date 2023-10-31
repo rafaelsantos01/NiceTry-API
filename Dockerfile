@@ -1,8 +1,11 @@
-FROM openjdk:11-jdk-slim
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+# Use uma base image compatível com aarch64
+FROM adoptopenjdk:11-jre-hotspot-bionic-aarch64
+# Copie o arquivo JAR do seu aplicativo Spring Boot para o contêiner
+COPY target/*.jar app.jar
+# Exponha a porta que o aplicativo Spring Boot escuta (se aplicável)
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Comando de inicialização do aplicativo Spring Boot
+CMD ["java", "-jar", "/app.jar"]
 
 #FROM ubuntu:latest AS build
 #RUN apt-get update
