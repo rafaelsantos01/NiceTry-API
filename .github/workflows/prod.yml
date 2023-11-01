@@ -35,7 +35,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Pull image from docker hub
-        run: docker pull rafaelsantos15/nice_try
+        run: docker pull rafaelsantos15/nice_try:latest
 
       - name: Remove old docker container
         run: docker rm -f nice_try
