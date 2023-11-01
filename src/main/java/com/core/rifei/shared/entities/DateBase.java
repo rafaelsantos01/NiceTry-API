@@ -2,7 +2,7 @@ package com.core.rifei.shared.entities;
 
 
 import com.core.rifei.modules.users.entityes.Users;
-import com.core.rifei.security.context.SetUserService;
+import com.core.rifei.security.context.GetUserService;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,7 +35,7 @@ public class DateBase {
 
   @PrePersist
   private void beforePersist(){
-    SetUserService setUserService = new SetUserService();
+    GetUserService setUserService = new GetUserService();
 
     if(this.userCreated == null || this.userUpdated == null){
       Users users = setUserService.execute();
@@ -48,7 +48,7 @@ public class DateBase {
   @PreUpdate
   private void beforeUpdate(){
 
-    SetUserService setUserService = new SetUserService();
+    GetUserService setUserService = new GetUserService();
 
     if( this.userUpdated == null){
       Users users = setUserService.execute();

@@ -6,7 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SetUserService {
+public class GetUserService {
 
 
   public Users execute(){

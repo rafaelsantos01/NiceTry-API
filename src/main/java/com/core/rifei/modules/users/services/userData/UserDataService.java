@@ -3,7 +3,7 @@ package com.core.rifei.modules.users.services.userData;
 import com.core.rifei.modules.users.entityes.Users;
 import com.core.rifei.modules.users.repository.UsersRepository;
 import com.core.rifei.modules.users.services.userData.dto.UserDataDTO;
-import com.core.rifei.security.context.SetUserService;
+import com.core.rifei.security.context.GetUserService;
 import com.core.rifei.utils.MaskCPF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class UserDataService {
   UsersRepository usersRepository;
 
   @Autowired
-  SetUserService setUserService;
+  GetUserService setUserService;
 
   @Autowired
   MaskCPF maskCPF;

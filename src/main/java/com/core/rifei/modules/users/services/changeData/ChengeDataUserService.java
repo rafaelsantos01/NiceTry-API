@@ -3,11 +3,10 @@ package com.core.rifei.modules.users.services.changeData;
 import com.core.rifei.modules.users.entityes.Users;
 import com.core.rifei.modules.users.repository.UsersRepository;
 import com.core.rifei.modules.users.services.changeData.dto.ChengeDataUserDTO;
-import com.core.rifei.security.context.SetUserService;
+import com.core.rifei.security.context.GetUserService;
 import com.core.rifei.utils.CpfAndCnpjValidation;
 import com.core.rifei.utils.PasswordValidation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +18,7 @@ public class ChengeDataUserService {
 
 
   @Autowired
-  SetUserService setUserService;
+  GetUserService setUserService;
 
   @Autowired
   PasswordValidation passwordValidation;

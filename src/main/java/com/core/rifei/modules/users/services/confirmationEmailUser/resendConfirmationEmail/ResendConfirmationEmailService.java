@@ -3,7 +3,7 @@ package com.core.rifei.modules.users.services.confirmationEmailUser.resendConfir
 import com.core.rifei.modules.users.entityes.Users;
 import com.core.rifei.modules.users.repository.UsersRepository;
 import com.core.rifei.modules.users.services.confirmationEmailUser.resendConfirmationEmail.dto.ResendConfirmationEmailDTO;
-import com.core.rifei.security.context.SetUserService;
+import com.core.rifei.security.context.GetUserService;
 import com.core.rifei.shared.SendEmail.SendEmailService;
 import com.core.rifei.shared.SendEmail.ENUM.TEMPLATETYPE;
 import com.core.rifei.shared.SendEmail.dto.SendEmailServiceDTO;
@@ -18,7 +18,7 @@ public class ResendConfirmationEmailService {
   UsersRepository usersRepository;
 
   @Autowired
-  SetUserService setUserService;
+  GetUserService setUserService;
 
 
   @Autowired

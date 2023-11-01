@@ -6,7 +6,7 @@ import com.core.rifei.modules.users.entityes.Users;
 import com.core.rifei.modules.users.services.activitiesUser.dto.ActivitiesUserResponseDTO;
 import com.core.rifei.modules.winners.entityes.Winner;
 import com.core.rifei.modules.winners.repository.WinnerRepository;
-import com.core.rifei.security.context.SetUserService;
+import com.core.rifei.security.context.GetUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class ActivitiesUserService {
   OrdersRepository ordersRepository;
 
   @Autowired
-  SetUserService setUserService;
+  GetUserService setUserService;
 
   @Autowired
   WinnerRepository winnerRepository;

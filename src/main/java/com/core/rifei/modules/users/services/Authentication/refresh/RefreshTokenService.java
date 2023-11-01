@@ -1,11 +1,10 @@
 package com.core.rifei.modules.users.services.Authentication.refresh;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.core.rifei.modules.users.entityes.Users;
 import com.core.rifei.modules.users.repository.UsersRepository;
 import com.core.rifei.modules.users.services.Authentication.dto.LoginResponseDTO;
 import com.core.rifei.security.TokenService;
-import com.core.rifei.security.context.SetUserService;
+import com.core.rifei.security.context.GetUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,7 @@ public class RefreshTokenService {
 
 
   @Autowired
-  private SetUserService userService;
+  private GetUserService userService;
 
   @Autowired
   UsersRepository usersRepository;

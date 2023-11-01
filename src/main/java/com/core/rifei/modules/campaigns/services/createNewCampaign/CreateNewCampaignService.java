@@ -4,12 +4,8 @@ import com.core.rifei.modules.campaigns.dto.CampaignDTO;
 import com.core.rifei.modules.campaigns.entityes.Campaigns;
 import com.core.rifei.modules.campaigns.repository.CampaignsRepository;
 import com.core.rifei.modules.campaigns.services.createNewCampaign.dto.CreateCampaignDTO;
-import com.core.rifei.modules.users.entityes.Users;
-import com.core.rifei.security.context.SetUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 
 @Service
 public class CreateNewCampaignService {

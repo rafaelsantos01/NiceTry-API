@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Service
-public class ErrorAuth {
+public class ErrorAuthFilter {
 
   @Autowired
   private MessageSource messageSource;

@@ -1,12 +1,10 @@
 package com.core.rifei.security;
 
 
-import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.core.rifei.config.errors.implementatins.ErrorAuth;
+import com.core.rifei.config.errors.implementatins.ErrorAuthFilter;
 import com.core.rifei.modules.users.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,7 +27,7 @@ public class SecurityFilter extends OncePerRequestFilter{
   UsersRepository userRepository;
 
   @Autowired
-  private ErrorAuth errorAuth;
+  private ErrorAuthFilter errorAuth;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
