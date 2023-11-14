@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.core</groupId>
-	<artifactId>rifei</artifactId>
+	<artifactId>nicetry</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>rifei</name>
 	<description>Demo project for Spring Boot</description>
